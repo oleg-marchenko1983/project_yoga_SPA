@@ -286,7 +286,7 @@ header ul li:before {
 .content .timer-numbers:after {
   content: '';
   display: block;
-  width: 20%;
+  width: 50%;
   height: 1px;
   background-color: #c78030;
   margin: 0 auto;
