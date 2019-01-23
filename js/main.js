@@ -6,7 +6,7 @@ window.addEventListener("DOMContentLoaded", function () {
   const tabContent = document.querySelectorAll('.info-tabcontent');
 
   const hideContent = (a) => {
-    for (let i = a, max= tabContent.length; i < max; i++) {
+    for (let i = a, max = tabContent.length; i < max; i++) {
       tabContent[i].classList.remove('show');
       tabContent[i].classList.add('hide');
     }
@@ -33,7 +33,7 @@ window.addEventListener("DOMContentLoaded", function () {
     }
   })
   // timer
-  const deadline = "2018-12-04";
+  const deadline = "2019-01-31";
 
   const getTimeRemaining = (endtime) => {
     let t = Date.parse(endtime) - Date.parse(new Date()),
@@ -84,69 +84,135 @@ window.addEventListener("DOMContentLoaded", function () {
   setClock('timer', deadline);
 
   //Module
-console.log(tabContent);
-    let more = document.querySelector('.more'),
-        overlay = document.querySelector('.overlay'),
-        popupClose = document.querySelector('.popup-close');
+  console.log(tabContent);
+  let more = document.querySelector('.more'),
+    overlay = document.querySelector('.overlay'),
+    popupClose = document.querySelector('.popup-close');
 
 
-     more.addEventListener('click', () => {
-        overlay.style.display = 'block';
-        this.classList.add('more-splash');
-        document.body.style.overflow = 'hidden'
-        console.log(this);
-     });
-     popupClose.addEventListener('click', () => {
-      overlay.style.display = 'none';
-      more.classList.remove('more-splash');
-      document.body.style.overflow = '';
-     });
-      // Form
+  more.addEventListener('click', () => {
+    overlay.style.display = 'block';
+    more.classList.add('more-splash');
+    document.body.style.overflow = 'hidden';
+  });
+  popupClose.addEventListener('click', () => {
+    overlay.style.display = 'none';
+    more.classList.remove('more-splash');
+    document.body.style.overflow = '';
+  });
+  // Form
 
-    let message = {
-        loading: 'Загрузка...',
-        success: 'Спасибо! Скоро мы с вами свяжемся!',
-        failure: 'Что-то пошло не так...'
-    };
+  //   let message = {
+  //     loading: 'Загрузка...',
+  //     success: 'Спасибо! Скоро мы с вами свяжемся!',
+  //     failure: 'Что-то пошло не так...'
+  // };
 
-    let form = document.querySelector('.main-form'),
-        input = form.getElementsByTagName('input'),
-        statusMessage = document.createElement('div');
+  // let form = document.getElementsByClassName('main-form')[0],
+  //     formBottom = document.getElementById('form'),
+  //     input = document.getElementsByTagName('input'),
+  //     statusMessage = document.createElement('div');
+  //     statusMessage.classList.add('status');
 
-        statusMessage.classList.add('status');
+  // function sendForm(elem) {
+  //     elem.addEventListener('submit', function(e) {
+  //         e.preventDefault();
+  //         elem.appendChild(statusMessage);
+  //         let formData = new FormData(elem);
 
-    form.addEventListener('submit', function(event) {
-        event.preventDefault();
-        form.appendChild(statusMessage);
+  //         function postData(data) {
 
-        let request = new XMLHttpRequest();
-        request.open('POST', 'server.php');
-        request.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+  //         return new Promise(function(resolve, reject) {
+  //                 let request = new XMLHttpRequest();
 
-        let formData = new FormData(form);
+  //                 request.open('POST', 'server.php');
 
-        let obj = {};
-        formData.forEach(function(value, key) {
-            obj[key] = value;
-        });
-        let json = JSON.stringify(obj);
+  //                 request.setRequestHeader('Content-type', 'application/json; charset=utf-8');
 
-        request.send(json);
+  //                 request.onreadystatechange = function () {
+  //                     if (request.readyState < 4) {
+  //                         resolve()
+  //                     } else if (request.readyState === 4) {
+  //                         if (request.status == 200 && request.status < 300) {
+  //                             resolve()
+  //                         } else {
+  //                             reject()
+  //                         }
 
-        request.addEventListener('readystatechange', function() {
-            if (request.readyState < 4) {
-                statusMessage.innerHTML = message.loading;
-            } else if(request.readyState === 4 && request.status == 200) {
-                statusMessage.innerHTML = message.success;
-            } else {
-                statusMessage.innerHTML = message.failure;
-            }
-        });
+  //                     }
+  //                 }
+  //                 request.send(data)
+  //             })
+  //         } // end postdata
+  //         function clearInput() {
+  //             for (let i = 0; i < input.lenght; i++) {
+  //                 input[i].value = '';
+  //             }
+  //         }
+  //         postData(formData)
+  //             .then(() => statusMessage.innerHTML = message.loading)
+  //             .then(() => {
+  //                 thanksModal.style.display = 'block';
+  //                 mainModal.style.display = 'none';
+  //                 statusMessage.innerHTML = '';
+  //             })
+  //             .catch(() => statusMessage.innerHTML = message.failure)
+  //             .then(clearInput)
+  //     });
+  //   };
 
-        for (let i = 0; i < input.length; i++) {
-            input[i].value = '';
-        }
-    });
+  //     sendForm(form);
+  //     sendForm(formBottom)
 
+  //slider
+
+  let slideIndex = 1,
+
+    slides = document.querySelectorAll('.slider-item'),
+    prev = document.querySelector('.prev'),
+    next = document.querySelector('.next'),
+    dotsWrap = document.querySelector('.slider-dots'),
+    dots = document.querySelectorAll('.dot');
+
+  showSlides(slideIndex);
+
+  function showSlides(n) {
+    if (n > slides.length) {
+      slideIndex = 1
+    }
+    if (n < 1) {
+      slideIndex = slides.length
+    }
+
+    slides.forEach(item => item.style.display = 'none');
+    // for (let i = 0; i < slides.lenght; i++) {
+    // slides[i].style.display = 'none';
+    dots.forEach(item => item.classList.remove('dot-active'));
+    slides[slideIndex - 1].style.display = 'block';
+    dots[slideIndex - 1].classList.add('dot-active');
+  };
+
+  function plusSlides(n) {
+    showSlides(slideIndex += n);
+  }
+
+  function currentSlides(n) {
+    showSlides(slideIndex = n);
+  }
+
+  prev.addEventListener('click', function () {
+    plusSlides(-1);
+  });
+
+  next.addEventListener('click', function () {
+    plusSlides(1);
+  });
+
+  dotsWrap.addEventListener('click', function (event) {
+    for (let i = 0; i < dots.length + 1; i++) {
+      if (event.target.classList.contains('dot') && event.target == dots[i - 1]) {
+        currentSlides(i);
+      }
+    }
+  })
 });
-
